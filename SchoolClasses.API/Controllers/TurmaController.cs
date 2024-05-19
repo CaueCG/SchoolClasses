@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SchoolClasses.Application.Services;
 
 namespace SchoolClasses.API.Controllers
 {
@@ -8,13 +9,38 @@ namespace SchoolClasses.API.Controllers
     {
 
         private readonly ILogger<TurmaController> _logger;
-
-        public TurmaController(ILogger<TurmaController> logger)
+        private ITurmaService _turmaService;
+        public TurmaController(ILogger<TurmaController> logger, ITurmaService turmaService)
         {
             _logger = logger;
+            _turmaService = turmaService;
         }
 
-        [HttpGet("api/aluno")]
+        [HttpPost("api/turma")]
+        public async Task<IActionResult> Add()
+        {
+            return Ok();
+        }
+
+        [HttpPut("api/turma/{id}")]
+        public async Task<IActionResult> Update(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("api/turma/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPatch("api/turma/{id}")]
+        public async Task<IActionResult> ToggleActivate(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("api/turma")]
         public async Task<IActionResult> GetAll()
         {
             return Ok();

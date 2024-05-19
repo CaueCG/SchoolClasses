@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SchoolClasses.Infrastructure.Repositories
 {
-    public class AlunoRepository : IAlunoRepository
+    public class CursoRepository : ICursoRepository
     {
         IDatabaseProvider _provider;
-        public AlunoRepository(IDatabaseProvider provider)
+        public CursoRepository(IDatabaseProvider provider)
         {
             _provider = provider;
         }

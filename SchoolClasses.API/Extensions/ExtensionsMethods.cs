@@ -2,15 +2,15 @@
 {
     public static class ExtensionsMethods
     {
-        public static void AddInterfacesDatabase(IServiceCollection serviceCollection)
+        public static void AddInterfacesDatabase(IServiceCollection service)
+        {
+            
+        }
+        public static void AddInterfacesRepositories(IServiceCollection service)
         {
 
         }
-        public static void AddInterfacesRepositories(IServiceCollection serviceCollection)
-        {
-
-        }
-        public static void AddInterfacesServices(IServiceCollection serviceCollection)
+        public static void AddInterfacesServices(IServiceCollection service)
         {
 
         }
