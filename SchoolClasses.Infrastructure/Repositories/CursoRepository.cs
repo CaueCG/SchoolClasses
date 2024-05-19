@@ -19,7 +19,8 @@ namespace SchoolClasses.Infrastructure.Repositories
             _connectionString = provider.GetConnectionString();
         }
 
-        public void Add(CursoModel turma) {
+        public void Add(CursoModel curso)
+        {
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"
@@ -27,9 +28,12 @@ namespace SchoolClasses.Infrastructure.Repositories
 	                (Nome)
                 VALUES
 	                (@Nome)";
+
+                connection.Execute(sql, curso);
             }
         }
-        public void Update(CursoModel turma) {
+        public void Update(CursoModel curso)
+        {
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"
@@ -38,18 +42,24 @@ namespace SchoolClasses.Infrastructure.Repositories
 	                Nome = @Nome
                 WHERE
 	                Id = @Id";
+
+                connection.Execute(sql, curso);
             }
         }
-        public void Delete(int id) {
+        public void Delete(int id)
+        {
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"
                 DELETE FROM Curso
                 WHERE
 	                Id = @Id";
+
+                connection.Execute(sql, new { Id = id });
             }
         }
-        public List<CursoModel> getAll() {
+        public List<CursoModel> getAll()
+        {
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"

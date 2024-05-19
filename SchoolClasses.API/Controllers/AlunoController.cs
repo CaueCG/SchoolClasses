@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Application.Services;
 
 namespace SchoolClasses.API.Controllers
@@ -20,31 +21,36 @@ namespace SchoolClasses.API.Controllers
         [HttpPost("api/aluno")]
         public async Task<IActionResult> Add([FromBody] InputAluno aluno)
         {
+            _alunoService.Add(aluno);
             return Ok();
         }
 
         [HttpPut("api/aluno/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] InputAluno aluno)
         {
+            _alunoService.Update(id, aluno);
             return Ok();
         }
 
         [HttpDelete("api/aluno/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            _alunoService.Delete(id);
             return Ok();
         }
 
         [HttpPatch("api/aluno/{id}")]
         public async Task<IActionResult> ToggleActivate(int id, ToggleActivate toggleActivate)
         {
+            _alunoService.ToggleActivate(id, toggleActivate);
             return Ok();
         }
 
         [HttpGet("api/aluno")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok();
+            List<ViewAluno> lst = _alunoService.GetAll();
+            return Ok(lst);
         }
     }
 }

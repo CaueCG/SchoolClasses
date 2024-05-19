@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace SchoolClasses.Application.Services
         void Update(int id, InputAluno aluno);
         void Delete(int id);
         void ToggleActivate(int id, ToggleActivate toggleActivate);
-        void GetAll();
+        List<ViewAluno> GetAll();
     }
 }

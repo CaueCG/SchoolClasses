@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace SchoolClasses.Application.Services
         void Update(int id, InputTurma turma);
         void Delete (int id);
         void ToggleActivate(int id, ToggleActivate toggleActivate);
-        void GetAll();
+        List<TurmaModel> GetAll();
     }
 }

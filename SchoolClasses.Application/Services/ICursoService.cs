@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace SchoolClasses.Application.Services
         void Add(InputCurso curso);
         void Update(int id, InputCurso curso);
         void Delete(int id);
-        void GetAll();
+        List<CursoModel> GetAll();
 
     }
 }
