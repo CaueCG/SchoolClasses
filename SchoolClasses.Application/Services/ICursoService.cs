@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolClasses.Application.RequestModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,10 @@ namespace SchoolClasses.Application.Services
 {
     public interface ICursoService
     {
+        void Add(InputCurso curso);
+        void Update(int id, InputCurso curso);
+        void Delete(int id);
+        void GetAll();
+
     }
 }

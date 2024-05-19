@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolClasses.Application.RequestModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,53 @@ namespace SchoolClasses.Application.Services
 {
     public class CursoService : ICursoService
     {
+        public void Add(InputCurso curso)
+        {
+            try
+            {
+
+            }
+            catch (Exception exc)
+            {
+                //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+        }
+        public void Update(int id, InputCurso curso)
+        {
+            try
+            {
+
+            }
+            catch (Exception exc)
+            {
+                //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+        }
+        public void Delete(int id)
+        {
+            try
+            {
+
+            }
+            catch (Exception exc)
+            {
+                //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+        }
+        public void GetAll()
+        {
+            try
+            {
+
+            }
+            catch (Exception exc)
+            {
+                //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+        }
     }
 }
