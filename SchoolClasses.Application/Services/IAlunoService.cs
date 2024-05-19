@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchoolClasses.Application.Services
 {
-    public class AlunoService : IAlunoService
+    public interface IAlunoService
     {
     }
 }

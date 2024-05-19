@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolClasses.Application.Services
+namespace SchoolClasses.Infrastructure.DataBase
 {
-    public class AlunoService : IAlunoService
+    public interface IDatabaseProvider
     {
+        string GetConnectionString();
     }
 }

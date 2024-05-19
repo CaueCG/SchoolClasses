@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolClasses.Application.Services
+namespace SchoolClasses.Core.Interfaces.Repositories
 {
-    public class AlunoService : IAlunoService
+    public interface ICursoRepository
     {
     }
 }

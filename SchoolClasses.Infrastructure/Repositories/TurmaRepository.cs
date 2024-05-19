@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolClasses.Application.Services
+namespace SchoolClasses.Infrastructure.Repositories
 {
-    public class AlunoService : IAlunoService
+    internal class TurmaRepository
     {
     }
 }
