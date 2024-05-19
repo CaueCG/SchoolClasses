@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ResponseModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolClasses.Core\SchoolClasses.Core.csproj" />
+  </ItemGroup>
+
 </Project>

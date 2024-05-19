@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SchoolClasses.Application.RequestModels;
 using SchoolClasses.Application.Services;
 
 namespace SchoolClasses.API.Controllers
@@ -18,13 +19,13 @@ namespace SchoolClasses.API.Controllers
         }
 
         [HttpPost("api/curso")]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add([FromBody] InputCurso curso)
         {
             return Ok();
         }
 
         [HttpPut("api/curso/{id}")]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(int id, [FromBody] InputCurso curso)
         {
             return Ok();
         }

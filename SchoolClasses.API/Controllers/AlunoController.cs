@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SchoolClasses.Application.RequestModels;
 using SchoolClasses.Application.Services;
 
 namespace SchoolClasses.API.Controllers
@@ -17,13 +18,13 @@ namespace SchoolClasses.API.Controllers
         }
 
         [HttpPost("api/aluno")]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add([FromBody] InputAluno aluno)
         {
             return Ok();
         }
 
         [HttpPut("api/aluno/{id}")]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(int id, [FromBody] InputAluno aluno)
         {
             return Ok();
         }
@@ -35,7 +36,7 @@ namespace SchoolClasses.API.Controllers
         }
 
         [HttpPatch("api/aluno/{id}")]
-        public async Task<IActionResult> ToggleActivate(int id)
+        public async Task<IActionResult> ToggleActivate(int id, ToggleActivate toggleActivate)
         {
             return Ok();
         }
