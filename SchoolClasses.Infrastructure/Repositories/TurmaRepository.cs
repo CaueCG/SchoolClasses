@@ -30,7 +30,7 @@ namespace SchoolClasses.Infrastructure.Repositories
                 VALUES
 	                (@Nome, @IdCurso, @Ano, @DtCriacao, @IsAtivo)";
 
-                connection.Execute(sql, turma);
+                connection.Execute(sql, new { Nome = turma.Nome, IdCurso = turma.Curso.Id, Ano = turma.Ano, DtCriacao = turma.DtCriacao, IsAtivo = turma.IsAtivo });
             }
         }
         public void Update(TurmaModel turma)
@@ -46,7 +46,7 @@ namespace SchoolClasses.Infrastructure.Repositories
                 WHERE
 	                Id = @Id";
 
-                connection.Execute(sql, turma);
+                connection.Execute(sql, new { Nome = turma.Nome, Ano = turma.Ano, IdCurso = turma.Curso.Id, Id = turma.Id });
             }
         }
         public void Delete(int id)
@@ -81,15 +81,28 @@ namespace SchoolClasses.Infrastructure.Repositories
             {
                 string sql = @"
                 SELECT 
-	                Id, 
-	                Nome, 
-	                IdCurso,
-	                Ano, 
-	                IsAtivo,
-	                DtCriacao
-                FROM Turma";
+                    t.Id, 
+                    t.Nome, 
+                    t.IdCurso AS CursoId, 
+                    t.Ano, 
+                    t.IsAtivo, 
+                    t.DtCriacao,
+                    c.Id AS Id, 
+                    c.Nome AS Nome
+                FROM Turma t
+                INNER JOIN Curso c ON t.IdCurso = c.Id";
 
-                return (List<TurmaModel>)connection.Query<TurmaModel>(sql);
+                var turmas = connection.Query<TurmaModel, CursoModel, TurmaModel>(
+                    sql,
+                    (turma, curso) =>
+                    {
+                        turma.Curso = curso;
+                        return turma;
+                    },
+                    splitOn: "CursoId,Id"
+                ).ToList();
+
+                return turmas;
             }
         }
         public List<string> MessagesValidationsSave(TurmaModel model)

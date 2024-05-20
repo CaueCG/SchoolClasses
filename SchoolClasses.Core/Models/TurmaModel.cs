@@ -9,7 +9,7 @@ namespace SchoolClasses.Core.Models
     public class TurmaModel
     {
         public int Id { get; set; }
-        public int IdCurso { get; set; }
+        public CursoModel Curso { get; set; } = new CursoModel();
         public string Nome { get; set; }
         public int Ano { get; set; }
         public bool IsAtivo { get; set; }

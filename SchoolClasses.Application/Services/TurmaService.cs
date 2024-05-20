@@ -26,7 +26,7 @@ namespace SchoolClasses.Application.Services
                 TurmaModel model = new TurmaModel
                 {
                     Nome = turma.Nome,
-                    IdCurso = turma.IdCurso,
+                    Curso = new CursoModel { Id = turma.IdCurso },
                     Ano = turma.Ano,
                     DtCriacao = DateTime.Now,
                     IsAtivo = turma.IsAtivo
@@ -61,7 +61,7 @@ namespace SchoolClasses.Application.Services
                 {
                     Id = id,
                     Nome = turma.Nome,
-                    IdCurso = turma.IdCurso,
+                    Curso = new CursoModel { Id = turma.IdCurso },
                     Ano = turma.Ano,
                     DtCriacao = DateTime.Now,
                     IsAtivo = turma.IsAtivo
@@ -129,7 +129,7 @@ namespace SchoolClasses.Application.Services
             {
                 List<TurmaModel> lst = _turmaRepository.getAll();
                 lstResult = lst.Select(x => new ViewTurma(
-                    x.Id, x.IdCurso, x.Nome, x.Ano, x.IsAtivo, x.DtCriacao)).ToList();
+                    x.Id, x.Curso.Id, x.Curso.Nome, x.Nome, x.Ano, x.IsAtivo, x.DtCriacao)).ToList();
             }
             catch (Exception exc)
             {
