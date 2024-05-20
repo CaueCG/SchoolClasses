@@ -6,7 +6,6 @@ using SchoolClasses.Application.Services;
 namespace SchoolClasses.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class AlunoController : ControllerBase
     {
 

@@ -6,7 +6,6 @@ using SchoolClasses.Core.Models;
 namespace SchoolClasses.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class TurmaController : ControllerBase
     {
 
