@@ -21,6 +21,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPost("api/aluno")]
         public async Task<IActionResult> Add([FromBody] InputAluno aluno)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);  
+
             _alunoService.Add(aluno);
             return Ok();
         }
@@ -28,6 +31,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPut("api/aluno/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] InputAluno aluno)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _alunoService.Update(id, aluno);
             return Ok();
         }
@@ -42,6 +48,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPatch("api/aluno/{id}")]
         public async Task<IActionResult> ToggleActivate(int id, ToggleActivate toggleActivate)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _alunoService.ToggleActivate(id, toggleActivate);
             return Ok();
         }

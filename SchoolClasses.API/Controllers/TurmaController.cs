@@ -21,6 +21,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPost("api/turma")]
         public async Task<IActionResult> Add([FromBody] InputTurma turma)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _turmaService.Add(turma);
             return Ok();
         }
@@ -28,6 +31,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPut("api/turma/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] InputTurma turma)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _turmaService.Update(id, turma);
             return Ok();
         }
@@ -42,6 +48,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPatch("api/turma/{id}")]
         public async Task<IActionResult> ToggleActivate(int id, [FromBody] ToggleActivate toggleActivate)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _turmaService.ToggleActivate(id, toggleActivate);
             return Ok();
         }

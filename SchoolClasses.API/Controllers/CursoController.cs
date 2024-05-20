@@ -22,6 +22,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPost("api/curso")]
         public async Task<IActionResult> Add([FromBody] InputCurso curso)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _cursoService.Add(curso);
             return Ok();
         }
@@ -29,6 +32,9 @@ namespace SchoolClasses.API.Controllers
         [HttpPut("api/curso/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] InputCurso curso)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _cursoService.Update(id, curso);
             return Ok();
         }
