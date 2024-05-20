@@ -5,6 +5,7 @@
 @inject IJSRuntime JsRuntime
 
 @using Models.Response;
+@using Models.Request;
 @using Services;
 
 <PageTitle>Alunos</PageTitle>
@@ -42,7 +43,7 @@ else
 					<td>@aluno.IsAtivo</td>
 					<td>@aluno.DtCriacao.ToString("dd/MM/yyyy")</td>
 					<td>
-						<button class="btn btn-info">@((aluno.IsAtivo) ? "Inativar" : "Ativar")</button>
+						<button class="btn btn-info" @onclick="@(()=> ToggleActivate(aluno.Id, aluno.IsAtivo))">@((aluno.IsAtivo) ? "Inativar" : "Ativar")</button>
 					</td>
 					<td>
 						<button class="btn btn-warning" onclick="teste()">Alterar</button>
@@ -66,13 +67,25 @@ else
 		await Task.Delay(500);
 	}
 
-	public async Task Delete(int id)
+	private async Task Delete(int id)
 	{
 		if (await ServiceAluno.Delete(id.ToString()))
 		{
 			ViewAluno alunoExcluded = lstAlunos.FirstOrDefault(x => x.Id.Equals(id));
 			if (alunoExcluded != null)
 				lstAlunos.Remove(alunoExcluded);
+
+			StateHasChanged();
+		}
+	}
+
+	private async Task ToggleActivate(int id, bool isAtivo)
+	{
+		if (await ServiceAluno.ToggleActivate(id.ToString(), new ToggleActivate { IsAtivo = !isAtivo }))
+		{
+			ViewAluno aluno = lstAlunos.FirstOrDefault(x => x.Id.Equals(id));
+			if (aluno != null)
+				aluno.IsAtivo = !isAtivo;
 
 			StateHasChanged();
 		}
