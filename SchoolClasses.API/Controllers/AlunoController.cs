@@ -88,5 +88,20 @@ namespace SchoolClasses.API.Controllers
 
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
+
+        [HttpGet("api/aluno/turma/{idTurma}")]
+        public async Task<IActionResult> GetByIdTurma(int idTurma)
+        {
+            List<ViewAluno> result = _alunoService.GetByIdTurma(idTurma);
+            if (result.Count == 0)
+                return Ok(result);
+
+            if (result[0].Success)
+                return Ok(result);
+            else if (result[0].Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }

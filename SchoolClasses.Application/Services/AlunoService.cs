@@ -144,5 +144,28 @@ namespace SchoolClasses.Application.Services
 
             return lstResult;
         }
+
+        public List<ViewAluno> GetByIdTurma(int idTurma)
+        {
+            List<ViewAluno> lstResult = new List<ViewAluno>();
+            try
+            {
+                List<AlunoModel> lst = _alunoRepository.GetByIdTurma(idTurma);
+                lstResult = lst.Select(x => new ViewAluno(
+                    x.Id, x.Nome, x.Usuario, x.DtCriacao, x.IsAtivo
+                    )).ToList();
+            }
+            catch (Exception exc)
+            {
+                //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                ViewAluno model = new ViewAluno();
+                model.AddErrorMessage("Pesquisa instável");
+                lstResult.Add(model);
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+
+            return lstResult;
+        }
+
     }
 }

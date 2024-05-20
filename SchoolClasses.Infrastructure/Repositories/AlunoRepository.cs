@@ -89,6 +89,28 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return (List<AlunoModel>)connection.Query<AlunoModel>(sql);
             }
         }
+
+        public List<AlunoModel> GetByIdTurma(int idTurma)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string sql = @"
+                SELECT 
+	                a.Id,
+	                a.Nome,
+	                a.Usuario, 
+	                a.IsAtivo,
+	                a.DtCriacao
+                FROM Aluno a
+                INNER JOIN Aluno_Turma at
+	                ON a.Id = at.IdAluno
+                WHERE 
+	                IdTurma= @IdTurma";
+
+                return (List<AlunoModel>)connection.Query<AlunoModel>(sql, new { IdTurma = idTurma });
+            }
+        }
+
         public List<string> MessagesValidationsSave(AlunoModel model)
         {
             List<string> messages = new List<string>();
