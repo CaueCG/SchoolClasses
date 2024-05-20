@@ -16,12 +16,14 @@ namespace SchoolClasses.API.Extensions
             service.AddScoped<IAlunoRepository, AlunoRepository>();
             service.AddScoped<ICursoRepository, CursoRepository>();
             service.AddScoped<ITurmaRepository, TurmaRepository>();
+            service.AddScoped<IAlunoTurmaRepository, AlunoTurmaRepository>();
         }
         public static void AddInterfacesServices(IServiceCollection service)
         {
             service.AddScoped<IAlunoService, AlunoService>();
             service.AddScoped<ICursoService, CursoService>();
             service.AddScoped<ITurmaService, TurmaService>();
+            service.AddScoped<IAlunoTurmaService, AlunoTurmaService>();
         }
     }
 }
