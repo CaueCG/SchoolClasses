@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Application.Services;
 using SchoolClasses.Core.Models;
 
@@ -22,9 +23,14 @@ namespace SchoolClasses.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            
+            var result = _turmaService.Add(turma);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
 
-            _turmaService.Add(turma);
-            return Ok();
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPut("api/turma/{id}")]
@@ -33,15 +39,25 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _turmaService.Update(id, turma);
-            return Ok();
+            var result = _turmaService.Update(id, turma);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpDelete("api/turma/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            _turmaService.Delete(id);
-            return Ok();
+            var result = _turmaService.Delete(id);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPatch("api/turma/{id}")]
@@ -50,15 +66,28 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _turmaService.ToggleActivate(id, toggleActivate);
-            return Ok();
+            var result = _turmaService.ToggleActivate(id, toggleActivate);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpGet("api/turma")]
         public async Task<IActionResult> GetAll()
         {
-            List<TurmaModel> lst = _turmaService.GetAll();
-            return Ok(lst);
+            List<ViewTurma> result = _turmaService.GetAll();
+            if (result.Count == 0)
+                return Ok(result);
+
+            if (result[0].Success)
+                return Ok(result);
+            else if (result[0].Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

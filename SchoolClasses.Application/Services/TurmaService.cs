@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Core.Interfaces.Repositories;
 using SchoolClasses.Core.Models;
 using System;
@@ -16,8 +17,10 @@ namespace SchoolClasses.Application.Services
         {
             _turmaRepository = turmaRepository;
         }
-        public void Add(InputTurma turma)
+        public ViewBaseResponse Add(InputTurma turma)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 TurmaModel model = new TurmaModel
@@ -29,16 +32,29 @@ namespace SchoolClasses.Application.Services
                     IsAtivo = turma.IsAtivo
                 };
 
-                _turmaRepository.Add(model);
+                List<string> MessagesValidation = _turmaRepository.MessagesValidationsSave(model);
+
+                if (MessagesValidation.Count == 0)
+                    _turmaRepository.Add(model);
+                else
+                    foreach (string message in MessagesValidation)
+                        response.AddErrorMessage(message);
+
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void Update(int id, InputTurma turma)
+
+        public ViewBaseResponse Update(int id, InputTurma turma)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 TurmaModel model = new TurmaModel
@@ -51,16 +67,29 @@ namespace SchoolClasses.Application.Services
                     IsAtivo = turma.IsAtivo
                 };
 
-                _turmaRepository.Update(model);
+                List<string> MessagesValidation = _turmaRepository.MessagesValidationsSave(model);
+
+                if (MessagesValidation.Count == 0)
+                    _turmaRepository.Update(model);
+                else
+                    foreach (string message in MessagesValidation)
+                        response.AddErrorMessage(message);
+
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void Delete(int id)
+
+        public ViewBaseResponse Delete(int id)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 _turmaRepository.Delete(id);
@@ -69,10 +98,16 @@ namespace SchoolClasses.Application.Services
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void ToggleActivate(int id, ToggleActivate toggleActivate)
+
+        public ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 _turmaRepository.ToggleActivate(id, toggleActivate.IsAtivo);
@@ -81,22 +116,32 @@ namespace SchoolClasses.Application.Services
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public List<TurmaModel> GetAll()
+
+        public List<ViewTurma> GetAll()
         {
-            List<TurmaModel> lstResult = new List<TurmaModel>();
+            List<ViewTurma> lstResult = new List<ViewTurma>();
             try
             {
-                lstResult = _turmaRepository.getAll();
+                List<TurmaModel> lst = _turmaRepository.getAll();
+                lstResult = lst.Select(x => new ViewTurma(
+                    x.Id, x.IdCurso, x.Nome, x.Ano, x.IsAtivo, x.DtCriacao)).ToList();
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                ViewTurma model = new ViewTurma();
+                model.AddErrorMessage("Pesquisa instável");
+                lstResult.Add(model);
                 System.Diagnostics.Debug.WriteLine(exc);
             }
 
             return lstResult;
+
         }
     }
 }

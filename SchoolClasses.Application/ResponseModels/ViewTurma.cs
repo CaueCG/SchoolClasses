@@ -6,23 +6,25 @@ using System.Threading.Tasks;
 
 namespace SchoolClasses.Application.ResponseModels
 {
-    public class ViewAluno : ViewBaseResponse
+    public class ViewTurma : ViewBaseResponse
     {
-        public ViewAluno() { }
-
-        public ViewAluno(int id, string nome, string usuario, DateTime dtCriacao, bool isAtivo)
+        public ViewTurma() { }
+        public ViewTurma(int id, int idCurso, string nome, int ano, bool isAtivo, DateTime dtCriacao)
         {
             Id = id;
+            IdCurso = idCurso;
             Nome = nome;
-            Usuario = usuario;
-            DtCriacao = dtCriacao;
+            Ano = ano;
             IsAtivo = isAtivo;
+            DtCriacao = dtCriacao;
         }
 
         public int Id { get; set; }
+        public int IdCurso { get; set; }
         public string Nome { get; set; }
-        public string Usuario { get; set; }
-        public DateTime DtCriacao { get; set; }
+        public int Ano { get; set; }
         public bool IsAtivo { get; set; }
+        public DateTime DtCriacao { get; set; }
+
     }
 }

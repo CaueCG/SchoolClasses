@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Core.Interfaces.Repositories;
 using SchoolClasses.Core.Models;
 using System;
@@ -17,8 +18,10 @@ namespace SchoolClasses.Application.Services
             _cursoRepository = cursoRepository;
         }
 
-        public void Add(InputCurso curso)
+        public ViewBaseResponse Add(InputCurso curso)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 CursoModel model = new CursoModel
@@ -26,16 +29,29 @@ namespace SchoolClasses.Application.Services
                     Nome = curso.Nome
                 };
 
-                _cursoRepository.Add(model);
+                List<string> MessagesValidation = _cursoRepository.MessagesValidationsSave(model);
+
+                if (MessagesValidation.Count == 0)
+                    _cursoRepository.Add(model);
+                else
+                    foreach (string message in MessagesValidation)
+                        response.AddErrorMessage(message);
+
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void Update(int id, InputCurso curso)
+
+        public ViewBaseResponse Update(int id, InputCurso curso)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 CursoModel model = new CursoModel
@@ -44,16 +60,29 @@ namespace SchoolClasses.Application.Services
                     Nome = curso.Nome
                 };
 
-                _cursoRepository.Update(model);
+                List<string> MessagesValidation = _cursoRepository.MessagesValidationsSave(model);
+
+                if(MessagesValidation.Count==0)
+                    _cursoRepository.Update(model);
+                else
+                    foreach(string message in MessagesValidation)
+                        response.AddErrorMessage(message);
+
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void Delete(int id)
+
+        public ViewBaseResponse Delete(int id)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 _cursoRepository.Delete(id);
@@ -62,22 +91,31 @@ namespace SchoolClasses.Application.Services
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public List<CursoModel> GetAll()
+
+        public List<ViewCurso> GetAll()
         {
-            List<CursoModel> lst = new List<CursoModel>();
+            List<ViewCurso> lstResult = new List<ViewCurso>();
             try
             {
-                lst = _cursoRepository.getAll();
+                List<CursoModel> lst = _cursoRepository.getAll();
+                lstResult = lst.Select(x => new ViewCurso(
+                    x.Id, x.Nome)).ToList();
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                ViewCurso model = new ViewCurso();
+                model.AddErrorMessage("Pesquisa instável");
+                lstResult.Add(model);
                 System.Diagnostics.Debug.WriteLine(exc);
             }
 
-            return lst;
+            return lstResult;
         }
     }
 }

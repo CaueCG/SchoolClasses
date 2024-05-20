@@ -92,5 +92,33 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return (List<TurmaModel>)connection.Query<TurmaModel>(sql);
             }
         }
+        public List<string> MessagesValidationsSave(TurmaModel model)
+        {
+            List<string> messages = new List<string>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var queryRepeatName = @"
+                SELECT 
+                CASE WHEN EXISTS (SELECT 1 FROM Turma WHERE Nome = @Nome AND Id <> @Id) 
+	                THEN 
+		                CAST(1 AS BIT) 
+	                ELSE 
+		                CAST(0 AS BIT)
+	                END;";
+
+                bool IsRepeatName = connection.ExecuteScalar<bool>(queryRepeatName, new { Nome = model.Nome, Id = model.Id });
+                if (IsRepeatName)
+                    messages.Add($"Já existe uma turma com o nome {model.Nome}");
+
+                //EXEMPLO PARA ADICIONAR OUTRA VALIDAÇÃO COM MENSAGEM
+                //var queryOtherValidation = @"query sql server";
+                //bool IsOtherValidation = connection.ExecuteScalar<bool>(queryRepeatName, new { Nome = model.Nome });
+                //if (IsOtherValidation)
+                //    messages.Add($"Message Other Validation");
+            }
+
+            return messages;
+        }
     }
 }

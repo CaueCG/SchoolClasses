@@ -14,5 +14,7 @@ namespace SchoolClasses.Core.Interfaces.Repositories
         void Delete(int id);
         void ToggleActivate(int id, bool toggleActivate);
         List<AlunoModel> getAll();
+        List<string> MessagesValidationsSave(AlunoModel aluno); //ABSTRAÇÃO QUE VERIFICA AS REGRAS DE NEGÓCIO ANTES DE DAR ADD OU UPDATE
+
     }
 }

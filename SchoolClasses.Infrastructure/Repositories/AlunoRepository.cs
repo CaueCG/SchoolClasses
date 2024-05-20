@@ -89,5 +89,33 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return (List<AlunoModel>)connection.Query<AlunoModel>(sql);
             }
         }
+        public List<string> MessagesValidationsSave(AlunoModel model)
+        {
+            List<string> messages = new List<string>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var queryRepeatUsuario = @"
+                SELECT 
+                CASE WHEN EXISTS (SELECT 1 FROM Aluno WHERE Usuario = @Usuario AND Id <> @Id) 
+	                THEN 
+		                CAST(1 AS BIT) 
+	                ELSE 
+		                CAST(0 AS BIT)
+	                END;";
+
+                bool IsRepeatUsuario = connection.ExecuteScalar<bool>(queryRepeatUsuario, new { Usuario = model.Usuario, Id = model.Id });
+                if (IsRepeatUsuario)
+                    messages.Add($"Este email já está sendo utilizado no sistema");
+
+                //EXEMPLO PARA ADICIONAR OUTRA VALIDAÇÃO COM MENSAGEM
+                //var queryOtherValidation = @"query sql server";
+                //bool IsOtherValidation = connection.ExecuteScalar<bool>(queryRepeatName, new { Nome = model.Nome });
+                //if (IsOtherValidation)
+                //    messages.Add($"Message Other Validation");
+            }
+
+            return messages;
+        }
     }
 }

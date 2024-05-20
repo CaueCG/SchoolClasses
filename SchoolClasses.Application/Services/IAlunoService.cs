@@ -10,10 +10,10 @@ namespace SchoolClasses.Application.Services
 {
     public interface IAlunoService
     {
-        void Add(InputAluno aluno);
-        void Update(int id, InputAluno aluno);
-        void Delete(int id);
-        void ToggleActivate(int id, ToggleActivate toggleActivate);
+        ViewBaseResponse Add(InputAluno aluno);
+        ViewBaseResponse Update(int id, InputAluno aluno);
+        ViewBaseResponse Delete(int id);
+        ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate);
         List<ViewAluno> GetAll();
     }
 }

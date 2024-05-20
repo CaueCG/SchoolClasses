@@ -14,7 +14,7 @@ namespace SchoolClasses.Core.Interfaces.Repositories
         void Delete(int id);
         void ToggleActivate(int id, bool toggleActivate);
         List<TurmaModel> getAll();
-        //List<string> MessagesValidationsSave(TurmaModel turma); //ABSTRAÇÃO QUE VERIFICA AS REGRAS DE NEGÓCIO ANTES DE DAR ADD OU UPDATE
+        List<string> MessagesValidationsSave(TurmaModel turma); //ABSTRAÇÃO QUE VERIFICA AS REGRAS DE NEGÓCIO ANTES DE DAR ADD OU UPDATE
 
     }
 }

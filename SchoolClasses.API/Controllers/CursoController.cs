@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Application.Services;
 using SchoolClasses.Core.Models;
 
@@ -24,8 +25,13 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _cursoService.Add(curso);
-            return Ok();
+           var result = _cursoService.Add(curso);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPut("api/curso/{id}")]
@@ -34,22 +40,40 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _cursoService.Update(id, curso);
-            return Ok();
+            var result = _cursoService.Update(id, curso);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpDelete("api/curso/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            _cursoService.Delete(id);
-            return Ok();
+            var result = _cursoService.Delete(id);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpGet("api/curso")]
         public async Task<IActionResult> GetAll()
         {
-            List<CursoModel> lst = _cursoService.GetAll();
-            return Ok(lst);
+            List<ViewCurso> result = _cursoService.GetAll();
+            if (result.Count == 0)
+                return Ok(result);
+
+            if (result[0].Success)
+                return Ok(result);
+            else if (result[0].Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

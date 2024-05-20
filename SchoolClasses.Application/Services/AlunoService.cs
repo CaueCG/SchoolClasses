@@ -18,8 +18,10 @@ namespace SchoolClasses.Application.Services
         {
             _alunoRepository = alunoRepository;
         }
-        public void Add(InputAluno aluno)
+        public ViewBaseResponse Add(InputAluno aluno)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 AlunoModel model = new AlunoModel
@@ -31,16 +33,29 @@ namespace SchoolClasses.Application.Services
                     IsAtivo = aluno.IsAtivo
                 };
 
-                _alunoRepository.Add(model);
+                List<string> MessagesValidation = _alunoRepository.MessagesValidationsSave(model);
+
+                if (MessagesValidation.Count == 0)
+                    _alunoRepository.Add(model);
+                else
+                    foreach (string message in MessagesValidation)
+                        response.AddErrorMessage(message);
+
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void Update(int id, InputAluno aluno)
+
+        public ViewBaseResponse Update(int id, InputAluno aluno)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 AlunoModel model = new AlunoModel
@@ -53,16 +68,29 @@ namespace SchoolClasses.Application.Services
                     IsAtivo = aluno.IsAtivo
                 };
 
-                _alunoRepository.Update(model);
+                List<string> MessagesValidation = _alunoRepository.MessagesValidationsSave(model);
+
+                if (MessagesValidation.Count == 0)
+                    _alunoRepository.Update(model);
+                else
+                    foreach (string message in MessagesValidation)
+                        response.AddErrorMessage(message);
+
             }
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void Delete(int id)
+
+        public ViewBaseResponse Delete(int id)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 _alunoRepository.Delete(id);
@@ -71,10 +99,16 @@ namespace SchoolClasses.Application.Services
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
-        public void ToggleActivate(int id, ToggleActivate toggleActivate)
+
+        public ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate)
         {
+            ViewBaseResponse response = new ViewBaseResponse();
+
             try
             {
                 _alunoRepository.ToggleActivate(id, toggleActivate.IsAtivo);
@@ -83,8 +117,12 @@ namespace SchoolClasses.Application.Services
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
                 System.Diagnostics.Debug.WriteLine(exc);
+                response.AddErrorMessage("Operação instável, reporte um administrador");
             }
+
+            return response;
         }
+
         public List<ViewAluno> GetAll()
         {
             List<ViewAluno> lstResult = new List<ViewAluno>();
@@ -98,6 +136,9 @@ namespace SchoolClasses.Application.Services
             catch (Exception exc)
             {
                 //POSSÍVEL INPLEMENTAÇÃO DE FERRAMENTA DE OBSERVABILIDADE COMO SERILOG
+                ViewAluno model = new ViewAluno();
+                model.AddErrorMessage("Pesquisa instável");
+                lstResult.Add(model);
                 System.Diagnostics.Debug.WriteLine(exc);
             }
 

@@ -10,7 +10,8 @@ namespace SchoolClasses.Application.Validations
 {
     public class UsuarioValidationAttribute : ValidationAttribute
     {
-        private const string Pattern = @"^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$";
+        private const string Pattern1 = @"^[A-Za-z0-9.]+@[A-Za-z0-9]+\.[A-Za-z]+\.([A-Za-z]+)?$";
+        private const string Pattern2 = @"^[A-Za-z0-9.]+@[A-Za-z0-9]+\.([A-Za-z]+)?$";
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -18,7 +19,7 @@ namespace SchoolClasses.Application.Validations
             {
                 var email = value.ToString();
 
-                if (Regex.IsMatch(email, Pattern, RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(email, Pattern1, RegexOptions.IgnoreCase) || Regex.IsMatch(email, Pattern2, RegexOptions.IgnoreCase))
                     return ValidationResult.Success;
                 else
                     return new ValidationResult("O formato do usuário é inválido.");

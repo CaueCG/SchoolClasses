@@ -23,8 +23,13 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);  
 
-            _alunoService.Add(aluno);
-            return Ok();
+            var result = _alunoService.Add(aluno);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPut("api/aluno/{id}")]
@@ -33,15 +38,25 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _alunoService.Update(id, aluno);
-            return Ok();
+            var result = _alunoService.Update(id, aluno);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpDelete("api/aluno/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            _alunoService.Delete(id);
-            return Ok();
+            var result = _alunoService.Delete(id);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPatch("api/aluno/{id}")]
@@ -50,15 +65,28 @@ namespace SchoolClasses.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _alunoService.ToggleActivate(id, toggleActivate);
-            return Ok();
+            var result = _alunoService.ToggleActivate(id, toggleActivate);
+            if (result.Success)
+                return Ok(result);
+            else if (result.Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpGet("api/aluno")]
         public async Task<IActionResult> GetAll()
         {
-            List<ViewAluno> lst = _alunoService.GetAll();
-            return Ok(lst);
+            List<ViewAluno> result = _alunoService.GetAll();
+            if (result.Count == 0)
+                return Ok(result);
+
+            if (result[0].Success)
+                return Ok(result);
+            else if (result[0].Errors.Count > 0)
+                return BadRequest(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

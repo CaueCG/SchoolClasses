@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace SchoolClasses.Application.Services
 {
     public interface ITurmaService
     {
-        void Add(InputTurma turma);
-        void Update(int id, InputTurma turma);
-        void Delete (int id);
-        void ToggleActivate(int id, ToggleActivate toggleActivate);
-        List<TurmaModel> GetAll();
+        ViewBaseResponse Add(InputTurma turma);
+        ViewBaseResponse Update(int id, InputTurma turma);
+        ViewBaseResponse Delete (int id);
+        ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate);
+        List<ViewTurma> GetAll();
     }
 }

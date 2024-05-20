@@ -1,4 +1,5 @@
 ﻿using SchoolClasses.Application.RequestModels;
+using SchoolClasses.Application.ResponseModels;
 using SchoolClasses.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace SchoolClasses.Application.Services
 {
     public interface ICursoService
     {
-        void Add(InputCurso curso);
-        void Update(int id, InputCurso curso);
-        void Delete(int id);
-        List<CursoModel> GetAll();
+        ViewBaseResponse Add(InputCurso curso);
+        ViewBaseResponse Update(int id, InputCurso curso);
+        ViewBaseResponse Delete(int id);
+        List<ViewCurso> GetAll();
 
     }
 }
