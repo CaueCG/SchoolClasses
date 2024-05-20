@@ -52,6 +52,10 @@ namespace SchoolClasses.Infrastructure.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"
+                DELETE FROM Aluno_Turma
+                WHERE 
+                    IdAluno = @Id
+
                 DELETE FROM Aluno
                 WHERE 
 	                Id = @Id";
@@ -89,7 +93,6 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return (List<AlunoModel>)connection.Query<AlunoModel>(sql);
             }
         }
-
         public List<AlunoModel> GetByIdTurma(int idTurma)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -110,7 +113,6 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return (List<AlunoModel>)connection.Query<AlunoModel>(sql, new { IdTurma = idTurma });
             }
         }
-
         public List<string> MessagesValidationsSave(AlunoModel model)
         {
             List<string> messages = new List<string>();

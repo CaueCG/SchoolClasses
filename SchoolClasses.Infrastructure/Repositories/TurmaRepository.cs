@@ -54,6 +54,10 @@ namespace SchoolClasses.Infrastructure.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"
+                DELETE FROM Aluno_Turma
+                WHERE 
+                    IdTurma = @Id
+
                 DELETE FROM Turma
                 WHERE 
 	                Id = @Id";

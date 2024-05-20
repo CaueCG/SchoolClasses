@@ -1,0 +1,80 @@
+﻿@page "/alunos"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+@inject IJSRuntime JsRuntime
+
+@using Models.Response;
+@using Services;
+
+<PageTitle>Alunos</PageTitle>
+
+<h1>Alunos</h1>
+
+<div class="d-flex justify-content-end">
+	<button class="btn btn-success">Novo aluno</button>
+</div>
+
+@if (lstAlunos == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Usuario</th>
+				<th>Ativo</th>
+				<th>Data Criação</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var aluno in lstAlunos)
+			{
+				<tr>
+					<td>@aluno.Nome</td>
+					<td>@aluno.Usuario</td>
+					<td>@aluno.IsAtivo</td>
+					<td>@aluno.DtCriacao.ToString("dd/MM/yyyy")</td>
+					<td>
+						<button class="btn btn-info">@((aluno.IsAtivo) ? "Inativar" : "Ativar")</button>
+					</td>
+					<td>
+						<button class="btn btn-warning" onclick="teste()">Alterar</button>
+					</td>
+					<td>
+						<button class="btn btn-danger" @onclick="@(() => Delete(aluno.Id))">Excluir</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<ViewAluno> lstAlunos = null;
+
+	protected override async Task OnInitializedAsync()
+	{
+
+		lstAlunos = await ServiceAluno.GetAll();
+		await Task.Delay(500);
+	}
+
+	public async Task Delete(int id)
+	{
+		if (await ServiceAluno.Delete(id.ToString()))
+		{
+			ViewAluno alunoExcluded = lstAlunos.FirstOrDefault(x => x.Id.Equals(id));
+			if (alunoExcluded != null)
+				lstAlunos.Remove(alunoExcluded);
+
+			StateHasChanged();
+		}
+	}
+}
