@@ -16,5 +16,6 @@ namespace SchoolClasses.Application.Services
         ViewBaseResponse Delete (int id);
         ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate);
         List<ViewTurma> GetAll();
+        ViewTurma GetById(int id);
     }
 }

@@ -1,8 +1,7 @@
 ﻿@page "/alunos"
 @attribute [StreamRendering]
 @rendermode InteractiveServer
-
-@inject IJSRuntime JsRuntime
+@inject NavigationManager Navigation
 
 @using Models.Response;
 @using Models.Request;
@@ -13,7 +12,7 @@
 <h1>Alunos</h1>
 
 <div class="d-flex justify-content-end">
-	<button class="btn btn-success">Novo aluno</button>
+	<button class="btn btn-success" @onclick="@(()=>GoCreate())">Novo aluno</button>
 </div>
 
 @if (lstAlunos == null)
@@ -46,7 +45,7 @@ else
 						<button class="btn btn-info" @onclick="@(()=> ToggleActivate(aluno.Id, aluno.IsAtivo))">@((aluno.IsAtivo) ? "Inativar" : "Ativar")</button>
 					</td>
 					<td>
-						<button class="btn btn-warning" onclick="teste()">Alterar</button>
+						<button class="btn btn-warning" @onclick="@(()=> GoEdit(aluno.Id))">Alterar</button>
 					</td>
 					<td>
 						<button class="btn btn-danger" @onclick="@(() => Delete(aluno.Id))">Excluir</button>
@@ -89,5 +88,15 @@ else
 
 			StateHasChanged();
 		}
+	}
+
+	private void GoEdit(int id)
+	{
+		Navigation.NavigateTo($"/aluno/{id}");
+	}
+
+	private void GoCreate()
+	{
+		Navigation.NavigateTo($"/aluno");
 	}
 }

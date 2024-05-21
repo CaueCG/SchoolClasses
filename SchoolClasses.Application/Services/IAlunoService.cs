@@ -16,5 +16,6 @@ namespace SchoolClasses.Application.Services
         ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate);
         List<ViewAluno> GetAll();
         List<ViewAluno> GetByIdTurma(int idTurma);
+        ViewAluno GetById(int id);
     }
 }

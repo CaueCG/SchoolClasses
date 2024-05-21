@@ -93,7 +93,25 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return (List<AlunoModel>)connection.Query<AlunoModel>(sql);
             }
         }
-        public List<AlunoModel> GetByIdTurma(int idTurma)
+		public AlunoModel GetById(int id)
+		{
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				string sql = @"
+                SELECT 
+	                Id,
+	                Nome,
+	                Usuario, 
+	                IsAtivo,
+	                DtCriacao
+                FROM Aluno
+                WHERE
+                    Id = @Id";
+
+				return connection.QueryFirstOrDefault<AlunoModel>(sql, new { Id = id });
+			}
+		}
+		public List<AlunoModel> GetByIdTurma(int idTurma)
         {
             using (var connection = new SqlConnection(_connectionString))
             {

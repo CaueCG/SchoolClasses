@@ -13,6 +13,7 @@ namespace SchoolClasses.Core.Interfaces.Repositories
         void Update(CursoModel curso);
         void Delete(int id);
         List<CursoModel> getAll();
-        List<string> MessagesValidationsSave(CursoModel curso); //ABSTRAÇÃO QUE VERIFICA AS REGRAS DE NEGÓCIO ANTES DE DAR ADD OU UPDATE
+		CursoModel GetById(int id);
+		List<string> MessagesValidationsSave(CursoModel curso); //ABSTRAÇÃO QUE VERIFICA AS REGRAS DE NEGÓCIO ANTES DE DAR ADD OU UPDATE
     }
 }

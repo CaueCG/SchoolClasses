@@ -15,6 +15,7 @@ namespace SchoolClasses.Application.Services
         ViewBaseResponse Update(int id, InputCurso curso);
         ViewBaseResponse Delete(int id);
         List<ViewCurso> GetAll();
+		ViewCurso GetById(int id);
 
-    }
+	}
 }

@@ -89,5 +89,19 @@ namespace SchoolClasses.API.Controllers
 
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
-    }
+
+		[HttpGet("api/turma/{id}")]
+		public async Task<IActionResult> GetById(int id)
+		{
+			var result = _turmaService.GetById(id);
+            if (result.Id == 0)
+                return BadRequest(result);
+			if (result.Success)
+				return Ok(result);
+			else if (result.Errors.Count > 0)
+				return BadRequest(result);
+
+			return StatusCode(StatusCodes.Status500InternalServerError);
+		}
+	}
 }

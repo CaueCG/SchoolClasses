@@ -109,6 +109,37 @@ namespace SchoolClasses.Infrastructure.Repositories
                 return turmas;
             }
         }
+        public TurmaModel GetById(int id)
+        {
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				string sql = @$"
+                SELECT 
+                    t.Id, 
+                    t.Nome, 
+                    t.IdCurso AS CursoId, 
+                    t.Ano, 
+                    t.IsAtivo, 
+                    t.DtCriacao,
+                    c.Id AS Id, 
+                    c.Nome AS Nome
+                FROM Turma t
+                INNER JOIN Curso c ON t.IdCurso = c.Id
+                WHERE 
+                    t.Id = {id}";
+
+                var model = (TurmaModel)connection.Query<TurmaModel, CursoModel, TurmaModel>(sql,
+                    (turma, curso) =>
+                    {
+                        turma.Curso = curso;
+                        return turma;
+                    },
+                    splitOn: "CursoId,Id"
+                ).SingleOrDefault() ;
+
+                return model;
+			}
+		}
         public List<string> MessagesValidationsSave(TurmaModel model)
         {
             List<string> messages = new List<string>();
