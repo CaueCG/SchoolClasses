@@ -4,11 +4,21 @@
 **Local:** `SchoolClasses/SchoolClasses.Infrastructure/DataBase/script.sql`
 
 ### **Configurar Connection String**
-**Local:** `appSettings.json` do projeto `SchoolClasses.API`
+**Local:** `appSettings.Development.json` do projeto `SchoolClasses.API`
+**Acrescentar:** `  "Constants": {
+    "ConnectionString": "Data Source=YourLocal\\YourInstanceSQLServer;Initial Catalog=SchoolClasses;Persist Security Info=True;User ID=YourUser;Password=YourPassword; TrustServerCertificate=True;"
+  }`
 
 ### **Configurar Prefixo da URL da API na camada Presentation**
-**Local:** `appSettings.json` do projeto `SchoolClasses.Presentation`  
-**Exemplo:** `https://localhost:7040`
+**Local:** `appSettings.Development.json` do projeto `SchoolClasses.Presentation`  
+**Acrescentar:** `
+  "Constants": {
+    "API_PREFIX_URL": "https://localhost:YourPortRunningAPI/"
+  }`
+**Exemplo:** `https://localhost:7040  OBSERVAÇÃO: Não incluir '/' no final, exemplo: https://localhost:7040/` 
+
+### **Configure incialização do projeto selecionando multiplos projetos**
+**Projetos a serem inicializados:** `SchoolClasses.API e SchoolClasses.Presentation`
 
 ---
 
