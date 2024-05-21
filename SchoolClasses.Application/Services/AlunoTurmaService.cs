@@ -54,7 +54,19 @@ namespace SchoolClasses.Application.Services
 
             try
             {
-                _alunoTurmaRepository.Delete(new AlunoTurmaModel { IdAluno = idAluno, IdTurma = idTurma });
+                AlunoTurmaModel model = new AlunoTurmaModel
+                {
+                    IdAluno = idAluno,
+                    IdTurma = idTurma
+                };
+
+                List<string> MessagesValidation = _alunoTurmaRepository.MessagesValidationsDelete(model);
+
+                if (MessagesValidation.Count == 0)
+                    _alunoTurmaRepository.Delete(model);
+                else
+                    foreach (string message in MessagesValidation)
+                        response.AddErrorMessage(message);
             }
             catch (Exception exc)
             {

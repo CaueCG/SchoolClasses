@@ -12,5 +12,6 @@ namespace SchoolClasses.Core.Interfaces.Repositories
         void Delete(AlunoTurmaModel alunoTurma);
         void Add(AlunoTurmaModel alunoTurma);
         List<string> MessagesValidationsSave(AlunoTurmaModel model);
+        List<string> MessagesValidationsDelete(AlunoTurmaModel model);
     }
 }

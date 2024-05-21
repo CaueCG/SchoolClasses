@@ -77,7 +77,7 @@ namespace SchoolClasses.Infrastructure.Repositories
 
 				bool isActiveUser = connection.ExecuteScalar<bool>(queryInactiveUser, alunoTurma);
 				if (!isActiveUser)
-					messages.Add("Este aluno está inativo, não pode ser relacionado a uma turma");
+					messages.Add("Este aluno está inativo/não existe, não é possível concluir operação");
 
 				//--------------------------------------------------------------------------------------------
 
@@ -90,9 +90,43 @@ namespace SchoolClasses.Infrastructure.Repositories
 
 				bool isActiveTurma = connection.ExecuteScalar<bool>(queryInactiveTurma, alunoTurma);
 				if (!isActiveTurma)
-					messages.Add("Esta turma está inativa, não é possível adicionar um aluno");
+					messages.Add("Esta turma está inativa/não existe, não é possível concluir operação");
 			}
 			return messages;
 		}
-	}
+
+        public List<string> MessagesValidationsDelete(AlunoTurmaModel alunoTurma)
+        {
+            List<string> messages = new List<string>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var queryExistUser = @"
+                SELECT 
+	                Id
+                FROM Aluno
+                WHERE 
+	                Id = @IdAluno";
+
+                bool isExistUser = connection.ExecuteScalar<bool>(queryExistUser, alunoTurma);
+                if (!isExistUser)
+                    messages.Add("Este aluno não existe, não é possível concluir operação");
+
+                //--------------------------------------------------------------------------------------------
+
+                var queryExistTurma = @"
+                SELECT 
+	                Id 
+                FROM Turma
+                WHERE 
+	                Id = @IdTurma";
+
+                bool isExistTurma = connection.ExecuteScalar<bool>(queryExistTurma, alunoTurma);
+                if (!isExistTurma)
+                    messages.Add("Esta turma não existe, não é possível concluir operação");
+            }
+            return messages;
+        }
+
+    }
 }
