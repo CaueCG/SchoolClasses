@@ -4,7 +4,7 @@ namespace SchoolClasses.Presentation.Contexts
 {
 	public class RoutesContext
 	{
-		private static readonly IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.json").AddEnvironmentVariables().Build();
+		private static readonly IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").AddEnvironmentVariables().Build();
 
 		private static string API_PREFIX_URL = config["Constants:API_PREFIX_URL"];
 

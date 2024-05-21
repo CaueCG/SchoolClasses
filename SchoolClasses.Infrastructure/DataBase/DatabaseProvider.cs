@@ -11,7 +11,7 @@ namespace SchoolClasses.Infrastructure.DataBase
 {
     public class DatabaseProvider : IDatabaseProvider
     {
-		private readonly IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+		private readonly IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
 
 		public string GetConnectionString()
         {
