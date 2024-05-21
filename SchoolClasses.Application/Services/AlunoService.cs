@@ -52,7 +52,7 @@ namespace SchoolClasses.Application.Services
 			return response;
 		}
 
-		public ViewBaseResponse Update(int id, InputAluno aluno)
+		public ViewBaseResponse Update(int id, InputUpdateAluno aluno)
 		{
 			ViewBaseResponse response = new ViewBaseResponse();
 
@@ -63,9 +63,6 @@ namespace SchoolClasses.Application.Services
 					Id = id,
 					Nome = aluno.Nome,
 					Usuario = aluno.Usuario,
-					Senha = aluno.Senha,
-					DtCriacao = DateTime.Now,
-					IsAtivo = aluno.IsAtivo
 				};
 
 				List<string> MessagesValidation = _alunoRepository.MessagesValidationsSave(model);

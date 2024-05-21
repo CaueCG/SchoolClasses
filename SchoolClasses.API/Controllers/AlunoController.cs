@@ -33,7 +33,7 @@ namespace SchoolClasses.API.Controllers
 		}
 
 		[HttpPut("api/aluno/{id}")]
-		public async Task<IActionResult> Update(int id, [FromBody] InputAluno aluno)
+		public async Task<IActionResult> Update(int id, [FromBody] InputUpdateAluno aluno)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);

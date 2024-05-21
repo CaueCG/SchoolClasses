@@ -51,7 +51,7 @@ namespace SchoolClasses.Application.Services
 			return response;
 		}
 
-		public ViewBaseResponse Update(int id, InputTurma turma)
+		public ViewBaseResponse Update(int id, InputUpdateTurma turma)
 		{
 			ViewBaseResponse response = new ViewBaseResponse();
 
@@ -62,9 +62,7 @@ namespace SchoolClasses.Application.Services
 					Id = id,
 					Nome = turma.Nome,
 					Curso = new CursoModel { Id = turma.IdCurso },
-					Ano = turma.Ano,
-					DtCriacao = DateTime.Now,
-					IsAtivo = turma.IsAtivo
+					Ano = turma.Ano
 				};
 
 				List<string> MessagesValidation = _turmaRepository.MessagesValidationsSave(model);

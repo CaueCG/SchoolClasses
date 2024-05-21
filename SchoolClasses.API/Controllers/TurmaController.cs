@@ -34,7 +34,7 @@ namespace SchoolClasses.API.Controllers
         }
 
         [HttpPut("api/turma/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] InputTurma turma)
+        public async Task<IActionResult> Update(int id, [FromBody] InputUpdateTurma  turma)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -12,7 +12,7 @@ namespace SchoolClasses.Application.Services
     public interface ITurmaService
     {
         ViewBaseResponse Add(InputTurma turma);
-        ViewBaseResponse Update(int id, InputTurma turma);
+        ViewBaseResponse Update(int id, InputUpdateTurma turma);
         ViewBaseResponse Delete (int id);
         ViewBaseResponse ToggleActivate(int id, ToggleActivate toggleActivate);
         List<ViewTurma> GetAll();
