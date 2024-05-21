@@ -1,16 +1,21 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Protocols;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace SchoolClasses.Infrastructure.DataBase
 {
     public class DatabaseProvider : IDatabaseProvider
     {
-        public string GetConnectionString()
+		private readonly IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+		public string GetConnectionString()
         {
-            return "Data Source=154.38.177.250\\SQLEXPRESS;Initial Catalog=SchoolClasses;Persist Security Info=True;User ID=infortronics;Password=Server2024; TrustServerCertificate=True;";
+            return config["Constants:ConnectionString"];
         }
     }
 }

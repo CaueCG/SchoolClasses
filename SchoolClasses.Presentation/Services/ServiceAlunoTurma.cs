@@ -7,7 +7,7 @@ namespace SchoolClasses.Presentation.Services
 {
     public class ServiceAlunoTurma
     {
-        public async Task<bool> Add(InputAlunoTurma model)
+        public static async Task<bool> Add(InputAlunoTurma model)
         {
             #region Validate
             #endregion
@@ -36,7 +36,7 @@ namespace SchoolClasses.Presentation.Services
                 return false;
             }
         }
-        public async Task<bool> Delete(string idAluno, string idTurma)
+        public static async Task<bool> Delete(string idAluno, string idTurma)
         {
             #region Validate
             #endregion

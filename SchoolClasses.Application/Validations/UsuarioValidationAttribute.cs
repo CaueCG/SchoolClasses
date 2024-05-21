@@ -22,7 +22,7 @@ namespace SchoolClasses.Application.Validations
                 if (Regex.IsMatch(email, Pattern1, RegexOptions.IgnoreCase) || Regex.IsMatch(email, Pattern2, RegexOptions.IgnoreCase))
                     return ValidationResult.Success;
                 else
-                    return new ValidationResult("O formato do usuário é inválido.");
+                    return new ValidationResult("O formato do usuário é inválido para um email.");
             }
             else
                 return new ValidationResult("O campo usuário é obrigatório");

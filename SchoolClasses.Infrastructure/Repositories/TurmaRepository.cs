@@ -146,7 +146,20 @@ namespace SchoolClasses.Infrastructure.Repositories
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                var queryRepeatName = @"
+                var queryExistCurso = @"
+                SELECT
+                CASE WHEN EXISTS (SELECT 1 FROM Curso WHERE Id = @IdCurso) 
+	                THEN 
+		                CAST(1 AS BIT) 
+	                ELSE 
+		                CAST(0 AS BIT)
+	                END;";
+                bool IsExistCurso = connection.ExecuteScalar<bool>(queryExistCurso, new { IdCurso = model.Curso.Id});
+                if(!IsExistCurso)
+					messages.Add($"Este curso não está registrado");
+
+
+				var queryRepeatName = @"
                 SELECT 
                 CASE WHEN EXISTS (SELECT 1 FROM Turma WHERE Nome = @Nome AND Id <> @Id) 
 	                THEN 
