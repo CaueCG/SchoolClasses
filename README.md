@@ -36,7 +36,9 @@
 
 ## **Faltou:**
 
-- **Implementar serviço genérico para captura de mensagens de erros padronizadas da API para expor ao usuário**
+**Observação:** Tudo que faltou no front-end já está disponível no back-end, front-end não finalizado devido a prazo esgotado (terça de manhã)
+
+- **Implementar serviço genérico para captura de mensagens de erros padronizadas no front-end advindas da API para expor ao usuário**
 - **Criar formulário e Alterar cursos, alunos e turmas**
 - **Criar formulário e Cadastrar cursos, alunos e turmas**
 - **Validar senha fraca com Regex para averiguar se atende os requisitos que estipularmos (Maisculas, minúsculas, números...)**
